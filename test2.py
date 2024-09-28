@@ -1,4 +1,3 @@
-import pandas as pd
 import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,7 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 import json
 
-# Helper function to get job information
+
 def get_info(url, chromepath):
     job_description = None
     job_requirement = None
@@ -44,7 +43,6 @@ def get_info(url, chromepath):
         elif 'Yêu cầu công việc' == detail.find('h2', class_ = 'sc-4913d170-5 kKmzVC').text.strip():
             job_requirement = detail.find('div', class_='sc-4913d170-6 hlTVkb').text.strip()
 
-    # lấy quyền lợi
     benefits = soup.find_all('div', class_='sc-c683181c-2 fGxLZh')
     benefit = ''
     for i in benefits:
@@ -66,7 +64,7 @@ def get_info(url, chromepath):
     driver.quit()
     return result
 
-# Main function to scrape job data and export it to a JSON file
+
 def scrape_jobs(chromepath, output_file, start_page, end_page):
     try:
         service = Service(executable_path=chromepath)
@@ -78,7 +76,7 @@ def scrape_jobs(chromepath, output_file, start_page, end_page):
             driver.get(f'https://www.vietnamworks.com/viec-lam?g=5&page={page}')
             time.sleep(5)
 
-            # Scroll down to load more jobs
+
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(1)
             print(f'Scraping page: {page}')
@@ -94,7 +92,6 @@ def scrape_jobs(chromepath, output_file, start_page, end_page):
 
         driver.quit()
 
-        # Save scraped data to JSON file
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(df_job, f, ensure_ascii=False, indent=4)
         print(f'Data has been saved to {output_file}')
@@ -102,7 +99,7 @@ def scrape_jobs(chromepath, output_file, start_page, end_page):
     except Exception as ex:
         print(f'Error: {ex}')
 
-# Main execution
+
 if __name__ == "__main__":
     chromepath = r'C:\Users\MSI\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe'
     output_file = 'C:/Users/MSI/Desktop/crawl/data/job_listings_4_5.json'
