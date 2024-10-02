@@ -83,5 +83,5 @@ def clean_html(html_content):
 # Main execution
 if __name__ == "__main__":
     chromepath = r'C:\Users\MSI\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe'  
-    output_file = 'C:/Users/MSI/Desktop/crawl/data/job_listings_1-10.json'  
+    output_file = 'C:/Users/MSI/Desktop/crawl/data/job_listings_1-2.json'  
     scrape_jobs(chromepath, output_file)

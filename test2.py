@@ -7,7 +7,6 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 import json
 
-
 def get_info(url, chromepath):
     job_description = None
     job_requirement = None
@@ -64,7 +63,6 @@ def get_info(url, chromepath):
     driver.quit()
     return result
 
-
 def scrape_jobs(chromepath, output_file, start_page, end_page):
     try:
         service = Service(executable_path=chromepath)
@@ -76,13 +74,14 @@ def scrape_jobs(chromepath, output_file, start_page, end_page):
             driver.get(f'https://www.vietnamworks.com/viec-lam?g=5&page={page}')
             time.sleep(5)
 
-
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(1)
             print(f'Scraping page: {page}')
             soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-            job_containers = soup.find_all('div', class_="sc-cvBxsj gmxClk")
+            job_containers = soup.find_all('div', class_="sc-cvBxsj hNxxmf")
+
+            print(f'Scraping : {job_containers}')
 
             for container in job_containers:
                 url = container.find('a', target='_blank').get('href')
@@ -99,10 +98,9 @@ def scrape_jobs(chromepath, output_file, start_page, end_page):
     except Exception as ex:
         print(f'Error: {ex}')
 
-
 if __name__ == "__main__":
     chromepath = r'C:\Users\MSI\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe'
-    output_file = 'C:/Users/MSI/Desktop/crawl/data/job_listings_4_5.json'
-    start_page = 4
-    end_page = 5
+    output_file = 'C:/Users/MSI/Desktop/crawl/data/job_listings_10_12.json'
+    start_page = 10
+    end_page = 12
     scrape_jobs(chromepath, output_file, start_page, end_page)
