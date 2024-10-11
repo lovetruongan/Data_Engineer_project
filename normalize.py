@@ -77,16 +77,16 @@ def process_json(data):
     
     return processed_data
 
-# Load the JSON data from the file
+
 with open('data/job_listings_06_07.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 
-# Process and normalize the data
+
 normalized_data = []
 for job in data:
     normalized_job = process_json(job)
     
-    if normalized_job:  # Only add the job if it's not None after processing
+    if normalized_job:  
         if 'Mức lương' in normalized_job:
             salary = normalized_job['Mức lương']
             if salary.strip() == "Thương lượng":
